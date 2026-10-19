@@ -1,2 +1,19 @@
 __pycache__/
 *.pyc
+
+# Machine-local credentials and deployment overrides never belong in this public repo.
+.env
+.env.*
+!.env.example
+.ssh/
+id_rsa
+id_ed25519
+*.key
+*.pem
+*.p12
+*.pfx
+deploy/*.local
+.venv/
+
+# Optional local scratch/export folder; keep master maps outside the repository.
+maps-local/

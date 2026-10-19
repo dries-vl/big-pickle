@@ -13,8 +13,8 @@
 #terrain{position:fixed;inset:0;width:100%;height:100%;touch-action:none;background:#707c77}#menu{position:relative;min-height:100svh;display:flex;flex-direction:column;padding:36px 5vw;background:linear-gradient(90deg,rgba(17,25,22,.98),rgba(17,25,22,.90) 35%,rgba(17,25,22,.35) 75%,rgba(17,25,22,.15));isolation:isolate}#menu:before{content:'';position:absolute;inset:14px;border:1px solid #c6a96b30;pointer-events:none;z-index:-1}
 header,footer{display:flex;align-items:center;justify-content:space-between;gap:24px}.eyebrow,header,footer,.meta,button,.hud,.legend{font-family:system-ui,sans-serif}.eyebrow,header,.meta{font-size:11px;letter-spacing:.22em;text-transform:uppercase}header{color:var(--muted)}.brand{display:flex;align-items:center;gap:14px}.seal{border:1px solid var(--gold);width:34px;height:40px;display:grid;place-items:center;color:var(--gold);font:24px Georgia;border-radius:0 0 45% 45%}.edition{letter-spacing:.12em}.hero{flex:1;display:flex;flex-direction:column;justify-content:center;max-width:640px;padding:64px 0}.eyebrow{color:var(--gold);display:flex;align-items:center;gap:16px}.eyebrow:before{content:'';width:35px;height:1px;background:var(--gold)}h1{font-weight:400;font-size:clamp(68px,7.6vw,116px);line-height:.91;letter-spacing:-.065em;margin:30px 0 24px}h1 em{font-weight:400;color:var(--gold)}.subtitle{font-size:19px;font-style:italic;color:#d2c8af;margin:0 0 28px}.intro{max-width:380px;font-size:16px;color:var(--muted);line-height:1.75;margin:0 0 32px}.primary{width:300px;max-width:100%;display:flex;justify-content:space-between;align-items:center;background:var(--gold);border:1px solid var(--gold);color:#18201b;padding:19px 22px;font-size:12px;letter-spacing:.1em;text-transform:uppercase}.primary:hover{background:#dfc38a}.secondary{border:0;background:none;color:var(--paper);padding:18px 0;font-size:12px;text-align:left;letter-spacing:.04em;width:fit-content}.secondary:hover{color:var(--gold)}#status{font:11px system-ui;color:var(--muted);min-height:30px;max-width:420px;line-height:1.6;margin-top:9px}.dot{display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--gold);margin-right:8px}.meta{display:flex;gap:32px;margin-top:20px;color:var(--muted);letter-spacing:.1em}.meta strong{display:block;color:var(--paper);font:22px Georgia;margin-bottom:7px;letter-spacing:0}footer{font-size:10px;color:var(--muted);line-height:1.8;letter-spacing:.06em}.map-note{position:absolute;right:6vw;top:43%;text-align:center;color:#eee5cfaa;pointer-events:none}.compass{font-size:54px;font-weight:400;line-height:1.4}.map-note small{font:10px system-ui;letter-spacing:.25em}.map-note p{font-style:italic;font-size:19px}dialog{max-width:560px;width:calc(100% - 40px);background:#202923;color:var(--paper);border:1px solid #c6a96b70;padding:36px;line-height:1.75}dialog::backdrop{background:#0009}dialog h2{font-weight:400;font-size:32px;margin-top:0}dialog button,.hud button{border:1px solid #c6a96b70;background:#202923;color:var(--paper);padding:10px 16px}.hud{position:fixed;inset:22px 24px auto;display:flex;justify-content:space-between;gap:16px;align-items:flex-start;pointer-events:none}.hud>*{pointer-events:auto;background:#17201bea;border:1px solid #c6a96b50;padding:14px 18px}.hud strong{font:22px Georgia}.hud small{display:block;color:var(--muted);font-size:10px;margin-top:6px;letter-spacing:.06em}.legend{position:fixed;bottom:24px;left:24px;padding:14px 18px;background:#17201bea;border:1px solid #c6a96b50;font-size:11px;color:var(--muted);line-height:1.9}.legend span{display:inline-block;margin-right:15px}.legend i{display:inline-block;width:7px;height:7px;margin-right:6px;background:var(--c)}[hidden]{display:none!important}
 @media(max-width:650px){#menu{padding:28px}.hero{padding:50px 0}.edition,.map-note{display:none}h1{font-size:76px}.intro{font-size:15px}.meta{gap:22px}footer{align-items:flex-start;font-size:9px}.hud{inset:12px}.hud>*{padding:10px}.hud strong{font-size:17px}.legend{left:12px;right:12px;bottom:12px}.legend .help{display:none}}
-.tools{display:flex;flex-wrap:wrap;gap:6px;max-width:520px}.tools button[aria-pressed=true]{background:#a98e51;color:#171e1b}.touch-help{display:none}.zoom{display:flex;gap:6px;margin-top:8px}.zoom button{background:#253329;color:var(--paper);border:1px solid #c6a96b70;width:34px;height:30px;font-size:20px}
-@media(max-width:650px){#menu{background:linear-gradient(90deg,#111916ed,#111916b8)}.hud{flex-direction:column;gap:6px}.hud .tools{padding:6px}.tools button{padding:9px;font-size:11px}.touch-help{display:block}.brand{font-size:9px;letter-spacing:.14em}.map-note{display:none}}
+.tools{display:flex;flex-wrap:wrap;gap:6px;max-width:600px}.tools button[aria-pressed=true]{background:#a98e51;color:#171e1b}.touch-help{display:none}.zoom{display:flex;gap:6px;margin-top:8px}.zoom button{background:#253329;color:var(--paper);border:1px solid #c6a96b70;width:34px;height:30px;font-size:20px}
+@media(max-width:650px){#menu{background:linear-gradient(90deg,#111916ed,#111916b8)}.hud{inset:12px 12px auto;flex-direction:column;gap:6px}.hud .tools{padding:6px}.tools button{padding:9px;font-size:11px}.touch-help{display:block}.brand{font-size:9px;letter-spacing:.14em}.map-note{display:none}}
 </style>
 </head>
 <body>
@@ -113,10 +113,10 @@ struct SkyVertex { @builtin(position) position:vec4f, @location(0) uv:vec2f };
 @fragment fn fs(v:Vertex) -> @location(0) vec4f {
  let px=1.0/(u.map.xy-1.0);
  // A wider normal stencil softens quantization in the supplied 8-bit heights.
- let step=px*4.0;
- let dx=height(v.uv+vec2f(step.x,0))-height(v.uv-vec2f(step.x,0));
- let dz=height(v.uv+vec2f(0,step.y))-height(v.uv-vec2f(0,step.y));
- let normal=normalize(vec3f(-dx/(2.0*step.x),1,-dz/(2.0*step.y*u.scale.w)));
+ let normalStep=px*4.0;
+ let dx=height(v.uv+vec2f(normalStep.x,0))-height(v.uv-vec2f(normalStep.x,0));
+ let dz=height(v.uv+vec2f(0,normalStep.y))-height(v.uv-vec2f(0,normalStep.y));
+ let normal=normalize(vec3f(-dx/(2.0*normalStep.x),1,-dz/(2.0*normalStep.y*u.scale.w)));
  let kind=material(v.uv);
  var color=vec3f(0.46,0.55,0.29);
  switch kind {
@@ -206,25 +206,36 @@ struct Crown { @builtin(position) position:vec4f, @location(0) local:vec2f, @loc
  return vec4f(atmosphere(color,v.world),1);
 }`;
 const relief = 6; // Display exaggeration; pack elevations remain unmodified.
-const defaults = {x:0.5,y:0.52,distance:1.05,yaw:0,pitch:0.88};
-let camera = {...defaults}, playing = false, render, failed = false;
+const defaults = {x:0.52,y:0.49,distance:0.82,yaw:-0.16,pitch:0.94};
+let camera = {...defaults}, playing = false, render, failed = false, dusk = false, contours = false;
+const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)');
 const keys=new Set();
-try { const saved=JSON.parse(localStorage.getItem('low-countries-view')); if (saved && Object.keys(defaults).every(k=>Number.isFinite(saved[k])) && saved.distance>=0.018 && saved.distance<=2.5 && saved.pitch>=0.3 && saved.pitch<=1.5 && saved.x>=0 && saved.x<=1 && saved.y>=0 && saved.y<=1) {camera=saved; $('enter').firstChild.textContent='Continue exploring ';} } catch {}
+try { const saved=JSON.parse(localStorage.getItem('low-countries-view')); if (saved && Object.keys(defaults).every(k=>Number.isFinite(saved[k])) && saved.distance>=0.018 && saved.distance<=2.5 && saved.pitch>=0.3 && saved.pitch<=1.5 && saved.x>=0 && saved.x<=1 && saved.y>=0 && saved.y<=1) {camera=saved; $('enter').firstChild.textContent='Verkenning voortzetten ';} } catch {}
 const ready = (async () => {
  const device = await gpuPromise;
- device.lost.then(info => fail(Error(`Graphics device lost: ${info.message || info.reason}. Reload to reconnect.`)));
- device.addEventListener('uncapturederror', event => fail(Error(event.error.message)));
+ device.lost.then(info => {console.error(info);fail(Error('De verbinding met de grafische kaart is verbroken. Herlaad de pagina om opnieuw te verbinden.'));});
+ device.addEventListener('uncapturederror', event => fail(event.error));
  const context=canvas.getContext('webgpu'), format=navigator.gpu.getPreferredCanvasFormat();
- if (!context) throw Error('Unable to create a WebGPU canvas');
+ if (!context) throw Error('Het WebGPU-tekenvlak kon niet worden aangemaakt.');
  context.configure({device,format,alphaMode:'opaque'});
  const module=device.createShaderModule({code:shader});
  module.getCompilationInfo().then(info=>{for(const message of info.messages) if(message.type==='error') console.error(`WGSL ${message.lineNum}: ${message.message}`);});
  // Compilation starts before waiting for the map; upload overlaps compilation.
- const pipelinePromise=device.createRenderPipelineAsync({layout:'auto',vertex:{module,entryPoint:'vs'},fragment:{module,entryPoint:'fs',targets:[{format}]},primitive:{topology:'triangle-list'},depthStencil:{format:'depth32float',depthWriteEnabled:true,depthCompare:'greater'}}).then(p=>{mark('pipeline-ready');return p;});
+ const both=GPUShaderStage.VERTEX|GPUShaderStage.FRAGMENT;
+ const bindings=device.createBindGroupLayout({entries:[
+  {binding:0,visibility:both,buffer:{type:'uniform'}},
+  {binding:1,visibility:both,texture:{viewDimension:'2d-array'}},
+  {binding:2,visibility:both,sampler:{type:'filtering'}},
+  {binding:3,visibility:GPUShaderStage.VERTEX,buffer:{type:'read-only-storage'}},
+  {binding:4,visibility:GPUShaderStage.VERTEX,buffer:{type:'read-only-storage'}}
+ ]});
+ const layout=device.createPipelineLayout({bindGroupLayouts:[bindings]});
+ const makePipeline=(vertex,fragment,sky=false)=>device.createRenderPipelineAsync({layout,vertex:{module,entryPoint:vertex},fragment:{module,entryPoint:fragment,targets:[{format}]},primitive:{topology:'triangle-list'},depthStencil:{format:'depth32float',depthWriteEnabled:!sky,depthCompare:sky?'always':'greater'}});
+ const pipelinePromise=Promise.all([makePipeline('vs','fs'),makePipeline('treeVS','treeFS'),makePipeline('skyVS','skyFS',true)]).then(p=>{mark('pipeline-ready');return p;});
  const scenePromise=assetsPromise.then(pack=>{
   const {meta:m,data}=pack;
   const size=m.tile+2, layers=m.columns*m.rows;
-  if (size>device.limits.maxTextureDimension2D || layers>device.limits.maxTextureArrayLayers) throw Error('This map exceeds the GPU texture limits');
+  if (size>device.limits.maxTextureDimension2D || layers>device.limits.maxTextureArrayLayers) throw Error('Deze kaart overschrijdt de textuurlimieten van je grafische kaart.');
   const texture=device.createTexture({size:[size,size,layers],format:'rg8unorm',usage:GPUTextureUsage.TEXTURE_BINDING|GPUTextureUsage.COPY_DST});
   device.queue.writeTexture({texture},data,{bytesPerRow:size*2,rowsPerImage:size},[size,size,layers]);
   // Keep only a tiny CPU height overview for terrain-following camera focus.
@@ -234,21 +245,38 @@ const ready = (async () => {
    const layer=Math.floor(py/m.tile)*m.columns+Math.floor(px/m.tile);
    overview[y*256+x]=(bytes[(layer*size*size+(py%m.tile+1)*size+px%m.tile+1)*2]/255-m.heightBase)*m.heightScale/m.widthMeters*relief;
   }
+  // Deterministic canopy clusters, placed only where the real cover map says forest.
+  // Fixed sampling budget keeps decoration independent of a future 10k+ raster.
+  const crowns=[], grid=224;
+  const random=n=>{const v=Math.sin(n*127.1)*43758.5453;return v-Math.floor(v);};
+  for(let y=0;y<grid;y++) for(let x=0;x<grid;x++){
+   const seed=y*grid+x, u=(x+0.2+random(seed)*0.6)/grid, v=(y+0.2+random(seed+17)*0.6)/grid;
+   const px=Math.round(u*(m.width-1)),py=Math.round(v*(m.height-1));
+   const layer=Math.floor(py/m.tile)*m.columns+Math.floor(px/m.tile);
+   const at=(layer*size*size+(py%m.tile+1)*size+px%m.tile+1)*2;
+   if(bytes[at+1]!==1) continue;
+   const h=(bytes[at]/255-m.heightBase)*m.heightScale/m.widthMeters*relief;
+   crowns.push(u,v,h,(0.35+random(seed+71)*0.27)/grid);
+  }
+  const treeBuffer=device.createBuffer({size:Math.max(16,crowns.length*4),usage:GPUBufferUsage.STORAGE|GPUBufferUsage.COPY_DST});
+  if(crowns.length) device.queue.writeBuffer(treeBuffer,0,new Float32Array(crowns));
   pack.data=null; // Release the full CPU raster after queue.writeTexture copies it.
-  mark('assets-upload-queued'); return {m,texture,overview};
+  mark('assets-upload-queued'); return {m,texture,overview,treeBuffer,treeCount:crowns.length/4};
  });
- const [pipeline,{m,texture,overview}]=await Promise.all([pipelinePromise,scenePromise]);
+ const [[pipeline,treePipeline,skyPipeline],{m,texture,overview,treeBuffer,treeCount}]=await Promise.all([pipelinePromise,scenePromise]);
  const uniform=device.createBuffer({size:80,usage:GPUBufferUsage.UNIFORM|GPUBufferUsage.COPY_DST});
  const patches=device.createBuffer({size:4096*16,usage:GPUBufferUsage.STORAGE|GPUBufferUsage.COPY_DST});
- const bind=device.createBindGroup({layout:pipeline.getBindGroupLayout(0),entries:[{binding:0,resource:{buffer:uniform}},{binding:1,resource:texture.createView({dimension:'2d-array'})},{binding:2,resource:device.createSampler({magFilter:'linear',minFilter:'linear'})},{binding:3,resource:{buffer:patches}}]});
+ const bind=device.createBindGroup({layout:bindings,entries:[{binding:0,resource:{buffer:uniform}},{binding:1,resource:texture.createView({dimension:'2d-array'})},{binding:2,resource:device.createSampler({magFilter:'linear',minFilter:'linear'})},{binding:3,resource:{buffer:patches}},{binding:4,resource:{buffer:treeBuffer}}]});
  const indices=[];
  for(let y=0;y<34;y++) for(let x=0;x<34;x++){const a=y*35+x;indices.push(a,a+35,a+1,a+1,a+35,a+36);}
  const index=device.createBuffer({size:indices.length*2,usage:GPUBufferUsage.INDEX|GPUBufferUsage.COPY_DST});
  device.queue.writeBuffer(index,0,new Uint16Array(indices));
- let depth, width=0, height=0;
+ let depth, width=0, height=0, inFlight=false, pending=false;
  const ratio=m.height/m.width, values=new Float32Array(20);
  render=()=>{
   if(failed) return;
+  // Bound queue latency on slow GPUs; keep only the latest requested camera view.
+  if(inFlight){pending=true;return;}
   const dpr=Math.min(devicePixelRatio,2), limit=device.limits.maxTextureDimension2D;
   const w=Math.min(limit,Math.max(1,Math.round(innerWidth*dpr))),h=Math.min(limit,Math.max(1,Math.round(innerHeight*dpr)));
   if(width!==w || height!==h){width=canvas.width=w;height=canvas.height=h;depth?.destroy();depth=device.createTexture({size:[w,h],format:'depth32float',usage:GPUTextureUsage.RENDER_ATTACHMENT});}
@@ -261,27 +289,35 @@ const ready = (async () => {
   visit(0,0,1,0);
   const targetHeight=overview[Math.round(camera.y*255)*256+Math.round(camera.x*255)];
   const target=[camera.x-0.5,targetHeight,(camera.y-0.5)*ratio], horizontal=Math.cos(camera.pitch)*camera.distance;
-  values.set([target[0]+Math.sin(camera.yaw)*horizontal,target[1]+Math.sin(camera.pitch)*camera.distance,target[2]+Math.cos(camera.yaw)*horizontal,0,...target,0,w/h,0,0,0,m.width,m.height,m.tile,m.columns,m.heightBase,m.heightScale/m.widthMeters,relief,ratio]);
+  values.set([target[0]+Math.sin(camera.yaw)*horizontal,target[1]+Math.sin(camera.pitch)*camera.distance,target[2]+Math.cos(camera.yaw)*horizontal,0,...target,0,w/h,reducedMotion.matches?0:performance.now()/1000,Number(contours),Number(dusk),m.width,m.height,m.tile,m.columns,m.heightBase,m.heightScale/m.widthMeters,relief,ratio]);
   device.queue.writeBuffer(uniform,0,values); device.queue.writeBuffer(patches,0,new Float32Array(list));
   const encoder=device.createCommandEncoder();
   const pass=encoder.beginRenderPass({colorAttachments:[{view:context.getCurrentTexture().createView(),clearValue:{r:.30,g:.37,b:.38,a:1},loadOp:'clear',storeOp:'store'}],depthStencilAttachment:{view:depth.createView(),depthClearValue:0,depthLoadOp:'clear',depthStoreOp:'store'}});
-  pass.setPipeline(pipeline);pass.setBindGroup(0,bind);pass.setIndexBuffer(index,'uint16');pass.drawIndexed(indices.length,list.length/4);pass.end();device.queue.submit([encoder.finish()]);
-  $('detail').textContent=`· ${m.width.toLocaleString()} × ${m.height.toLocaleString()}`;
+  pass.setBindGroup(0,bind);pass.setPipeline(skyPipeline);pass.draw(3);
+  pass.setPipeline(pipeline);pass.setIndexBuffer(index,'uint16');pass.drawIndexed(indices.length,list.length/4);
+  pass.setPipeline(treePipeline);pass.draw(6,treeCount);pass.end();device.queue.submit([encoder.finish()]);
+  inFlight=true;
+  device.queue.onSubmittedWorkDone().then(()=>{inFlight=false;if(pending){pending=false;render();}},fail);
+  $('detail').textContent=`· ${m.width.toLocaleString('nl-NL')} × ${m.height.toLocaleString('nl-NL')}`;
  };
  render(); await device.queue.onSubmittedWorkDone();mark('first-frame-complete');
  await new Promise(requestAnimationFrame); mark('renderer-ready');
- if(!failed) status.textContent='Landscape ready. Enter when you are ready.';
+ if(!failed) status.textContent='Het landschap is klaar. De verkenning kan beginnen.';
  return render;
 })();
 // Attach rejection handlers immediately, even if the other startup branch fails first.
 assetsPromise.catch(fail); gpuPromise.catch(fail); ready.catch(fail);
-function fail(error){failed=true;status.textContent=error.message || String(error);$('enter').disabled=true;$('enter').firstChild.textContent='Renderer unavailable ';showMenu();console.error(error);}
+function fail(error){failed=true;status.textContent=error.constructor===Error ? error.message : 'Het landschap kon niet worden geladen. Controleer je verbinding en WebGPU-ondersteuning en herlaad de pagina.';$('enter').disabled=true;$('enter').firstChild.textContent='Landschap niet beschikbaar ';showMenu();console.error(error);}
 function save(){try{localStorage.setItem('low-countries-view',JSON.stringify(camera));}catch{}}
 function showMenu(){playing=false;menu.hidden=false;$('hud').hidden=$('legend').hidden=true;keys.clear();}
-$('enter').onclick=async()=>{ $('enter').disabled=true;status.textContent='Opening the landscape…';mark('enter-clicked');try{await ready;if(failed)return;render();await new Promise(requestAnimationFrame);menu.hidden=true;$('hud').hidden=$('legend').hidden=false;playing=true;mark('playing');canvas.tabIndex=0;canvas.focus();}catch(error){fail(error);}finally{if(!failed)$('enter').disabled=false;} };
+$('enter').onclick=async()=>{ $('enter').disabled=true;status.textContent='Het landschap wordt geopend…';mark('enter-clicked');try{await ready;if(failed)return;render();await new Promise(requestAnimationFrame);menu.hidden=true;$('hud').hidden=$('legend').hidden=false;playing=true;mark('playing');canvas.tabIndex=0;canvas.focus();}catch(error){fail(error);}finally{if(!failed)$('enter').disabled=false;} };
 $('about').onclick=()=>$('history').showModal();$('close').onclick=()=>$('history').close();
 $('back').onclick=()=>{save();showMenu();$('enter').focus();};
 function reset(){camera={...defaults};render?.();save();} $('reset').onclick=reset;
+$('light').onclick=()=>{dusk=!dusk;$('light').textContent=dusk?'Licht: avond':'Licht: ochtend';$('light').setAttribute('aria-pressed',dusk);render?.();};
+$('contours').onclick=()=>{contours=!contours;$('contours').setAttribute('aria-pressed',contours);render?.();};
+$('zoom-in').onclick=()=>{camera.distance=Math.max(.018,camera.distance/1.25);render?.();save();};
+$('zoom-out').onclick=()=>{camera.distance=Math.min(2.5,camera.distance*1.25);render?.();save();};
 addEventListener('resize',()=>render?.());
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));let drag;
 function pan(dx,dy){const c=Math.cos(camera.yaw),s=Math.sin(camera.yaw);camera.x=clamp(camera.x+dx*c+dy*s,0,1);camera.y=clamp(camera.y-dx*s+dy*c,0,1);}
@@ -291,7 +327,16 @@ canvas.onpointerup=canvas.onpointercancel=canvas.onlostpointercapture=()=>{drag=
 canvas.addEventListener('wheel',e=>{if(!playing)return;e.preventDefault();camera.distance=clamp(camera.distance*Math.exp(clamp(e.deltaY,-100,100)*.0015),.018,2.5);render?.();save();},{passive:false});
 addEventListener('keydown',e=>{if(!playing)return;const key=e.key.toLowerCase();if(['w','a','s','d','q','e','arrowup','arrowdown','arrowleft','arrowright','r','escape'].includes(key)){e.preventDefault();if(key==='escape'){$('back').click();return;}if(key==='r'){reset();return;}keys.add(key);}});
 addEventListener('keyup',e=>{keys.delete(e.key.toLowerCase());save();});addEventListener('blur',()=>{keys.clear();drag=null;save();});
-let last=0;function tick(now){const dt=Math.min((now-last)/1000,.05);last=now;if(playing&&keys.size&&!document.hidden){const step=dt*camera.distance*.5;pan((Number(keys.has('d')||keys.has('arrowright'))-Number(keys.has('a')||keys.has('arrowleft')))*step,(Number(keys.has('s')||keys.has('arrowdown'))-Number(keys.has('w')||keys.has('arrowup')))*step);camera.yaw+=(Number(keys.has('e'))-Number(keys.has('q')))*dt;render?.();}requestAnimationFrame(tick);}requestAnimationFrame(tick);
+// Water and clouds animate at at most 24 fps; menu/hidden tabs remain GPU-idle.
+let last=0,lastFrame=0;
+function tick(now){
+ const dt=Math.min((now-last)/1000,.05);last=now;
+ if(playing&&!document.hidden){
+  if(keys.size){const step=dt*camera.distance*.5;pan((Number(keys.has('d')||keys.has('arrowright'))-Number(keys.has('a')||keys.has('arrowleft')))*step,(Number(keys.has('s')||keys.has('arrowdown'))-Number(keys.has('w')||keys.has('arrowup')))*step);camera.yaw+=(Number(keys.has('e'))-Number(keys.has('q')))*dt;}
+  if(keys.size||(!reducedMotion.matches&&now-lastFrame>1000/24)){render?.();lastFrame=now;}
+ }
+ requestAnimationFrame(tick);
+}requestAnimationFrame(tick);
 </script>
 </body>
 </html>

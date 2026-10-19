@@ -1,0 +1,12 @@
+# BEGIN low-countries-game
+game.driesvl.com {
+    root * /var/www/game.driesvl.com
+    encode zstd gzip
+    header Cache-Control "no-cache"
+    @game path / /index.html /resources.bin
+    handle @game {
+        file_server
+    }
+    respond "Niet gevonden" 404
+}
+# END low-countries-game
