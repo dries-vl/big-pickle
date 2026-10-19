@@ -36,35 +36,60 @@ the original two-file delivery remains intact, with no additional assets.
 
 ## Deployment
 
-The public endpoint is `https://game.driesvl.com`. Deployment uses SSH and Caddy.
-Keep SSH keys, server addresses, account names, passwords and provider tokens
-in your machine's SSH configuration or credential store, outside this repository.
-The repository contains only the public virtual-host configuration and deployment
-code; it does not provide authentication. Activating the host requires server sudo
-access. Configure DNS to the intended server before activation.
-
-Choose your own SSH alias below (configured locally in `~/.ssh/config`):
+From your PC, publish the current game and small maps with one command:
 
 ```sh
-DEPLOY_HOST=your-ssh-alias
-ssh "$DEPLOY_HOST" 'mkdir -p game-deploy'
-scp index.html resources.bin deploy/Caddyfile.game deploy/activate.sh "$DEPLOY_HOST:game-deploy/"
-ssh -t "$DEPLOY_HOST" 'sudo bash game-deploy/activate.sh'
+python deploy.py
 ```
 
-`deploy/activate.sh` validates a candidate Caddy configuration, installs the two
-public files into `/var/www/game.driesvl.com`, backs up the existing configuration,
-adds only the game host, and reloads Caddy. It restores the old configuration if
-reload fails. Caddy handles certificate issuance/renewal and HTTP→HTTPS redirects.
-The host only serves `/`, `/index.html`, and `/resources.bin`; it uses conditional
-cache revalidation so a changed HTML/pack is not held behind an arbitrary TTL.
+Requires Python 3.11+, Pillow and OpenSSH on your PC, and Python 3 on the Linux
+server. This builds `resources.bin` from the repository's `heights.png` and
+`ground_types.png`, verifies all packed texels, and publishes **only `index.html`
+and `resources.bin`** to <https://game.driesvl.com>. It publishes the working tree;
+no Git commit, push, or GitHub credentials are required.
 
-Repeat the upload/activation steps for later full releases. Public files are owned
-by the user invoking sudo, so a map-only update can replace the binary without
-changing the Caddy configuration (see below).
+### Private machine configuration (once per PC)
 
-After activation, check `curl -I https://game.driesvl.com` and open that URL in
-a WebGPU-capable browser. A Python development server is not needed in production.
+Configure an SSH alias in your own `~/.ssh/config`. Put only its name in
+`~/.config/big-pickle/deploy.json` (or `$XDG_CONFIG_HOME/big-pickle/deploy.json`):
+
+```json
+{"ssh_host":"your-ssh-alias"}
+```
+
+This file lives **outside Git**. Server addresses, usernames and SSH keys stay in
+your SSH configuration/agent. The script stores no passwords or tokens and does
+not disable SSH host-key checks or HTTPS certificate verification. An encrypted
+SSH key may prompt for its passphrase unless already loaded in your SSH agent.
+
+Alternatively: `python deploy.py --host your-ssh-alias`.
+
+### What publication does
+
+- Uploads to a new release directory and verifies SHA-256 checksums before activation.
+- Switches both public file paths through one atomic `.current` symlink change.
+  Existing flat-file deployments are migrated while preserving their original files.
+- Fetches both files over public HTTPS and checks their hashes. If that fails,
+  restores the previous release, unless another deployment has since taken over.
+- Retains earlier releases in `.releases/` for recovery; no automatic deletion.
+  Caddy only serves `/`, `/index.html`, and `/resources.bin`, so release directories
+  are not exposed as additional public routes.
+
+Routine updates run as your SSH user, need **no sudo**, and do not reload Caddy.
+If the website directory needs initial setup, the command stages the two public
+files plus `deploy/activate.sh` and `deploy/Caddyfile.game`, then prompts for sudo
+in your terminal. Setup validates and backs up Caddy's config before reloading it.
+Use `python deploy.py --setup` to explicitly reconfigure an existing installation.
+DNS must already point at the server; Caddy handles HTTPS certificates and redirects.
+
+For a local-only rehearsal:
+
+```sh
+python deploy.py --dry-run
+```
+
+The server uses cache revalidation; reload an already-open page to load a new
+release. Python's development HTTP server is not needed in production.
 
 ## Build the binary resources
 
@@ -106,29 +131,18 @@ Replacing a PNG alone does **not** update the displayed map.
 
 3. Reload the local preview. Use **Beginbeeld** to reset a camera position saved
    while viewing the previous map. No HTML changes are required for new dimensions.
-4. Publish the generated binary. After initial deployment, upload to a temporary
-   name and rename it so visitors cannot download a partially uploaded pack:
+4. Publish both runtime files using the same deployment command:
 
    ```sh
-   scp resources.bin "$DEPLOY_HOST:/var/www/game.driesvl.com/resources.bin.next"
-   ssh "$DEPLOY_HOST" 'mv /var/www/game.driesvl.com/resources.bin.next /var/www/game.driesvl.com/resources.bin'
+   python deploy.py
    ```
 
    Reload the site to see the new map. The server's `no-cache` policy revalidates
    the binary. An already-open page keeps its existing GPU map until reloaded.
 
-Alternatively, build directly from files outside the repository:
-
-```sh
-python build_assets.py --heights /path/to/export/heights.png --cover /path/to/export/ground_types.png
-python verify_assets.py --heights /path/to/export/heights.png --cover /path/to/export/ground_types.png
-```
-
-Both commands use the repository's `resources.bin` by default. If changing
-`--output` on the builder, pass that same path with `--pack` to the verifier.
-Record the source export/version and build parameters alongside any published
-pack so it can be reproduced. Commit public source PNGs together with their
-generated pack when using the repository's default input pair.
+The deployment command always rebuilds from the repository's default input pair
+and default calibration. Commit the public source PNGs with their generated pack
+to keep map changes reproducible.
 
 **Input format:** elevation must be 8-bit grayscale (or RGB/RGBA with identical
 R/G/B channels). The current builder reads its red channel; 16-bit/float DEMs
@@ -149,32 +163,6 @@ need an explicit calibrated conversion first. Cover must use exact class colors:
 Resample cover with **nearest-neighbor**, never bilinear/JPEG/antialiasing, which
 would invent invalid class colors. Different palettes need an explicit mapping
 in `CLASSES` in `build_assets.py`; new material types also need shader support.
-
-### Store the full-resolution master maps
-
-Keep large originals outside the public Git repository and the website root:
-
-```text
-~/.local/share/big-pickle/basemaps/
-  low-countries-v1/
-    source/       # untouched 40k originals, original precision and metadata
-    exports/      # aligned height/cover crops or reduced-resolution runtime inputs
-    provenance.md # origin, license, CRS, bounds, vertical units/datum and export steps
-```
-
-For remote backup, use a **private object-storage bucket** (for example Hetzner
-Object Storage) with versioned object names. Keep access keys in a local credential
-store, not Git, HTML, or the binary. Only intentionally published, licensed runtime
-resources belong on the game website. Compression is not encryption: both source
-PNGs committed here and terrain packed into `resources.bin` are publicly readable.
-
-A 100 MB compressed source image is not a 100 MB GPU allocation. A 40,000² map
-would occupy 1,600 current-size tiles and about **3.14 GiB** of RG8 GPU storage,
-before CPU decoding and other resources; the current 256-layer renderer does
-**not** support loading that full map. The exact limit also depends on height,
-not just width. For now, export a matching crop or downsampled pair (e.g. 4,096²).
-Keep the originals untouched for the future tiled-streaming pipeline described
-below. Storing originals in object storage alone does not add streaming support.
 
 ### Elevation assumptions
 
@@ -256,6 +244,9 @@ range streaming would require an appropriate server. No extra resource URLs
 are necessary for that extension.
 
 ## Verification
+
+`python -m unittest test_deploy.py` exercises publication, migration, upload
+validation and rollback in local temporary directories, without contacting a server.
 
 `verify_assets.py` independently compares every packed height/material texel
 and gutter against the PNGs. Browser checks during implementation use Chromium

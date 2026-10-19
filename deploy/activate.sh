@@ -35,7 +35,10 @@ target.write_text(text)
 PY
 caddy validate --config "$candidate" --adapter caddyfile
 install -d -m 755 -o "$owner" -g "$group" /var/www/game.driesvl.com
-install -m 644 -o "$owner" -g "$group" index.html resources.bin /var/www/game.driesvl.com/
+# Later --setup runs only reconfigure Caddy; deploy.py manages existing releases.
+if [[ ! -L /var/www/game.driesvl.com/.current ]]; then
+    install -m 644 -o "$owner" -g "$group" index.html resources.bin /var/www/game.driesvl.com/
+fi
 backup="${config}.before-game.$(date +%Y%m%d-%H%M%S)"
 cp -p "$config" "$backup"
 install -m 644 -o root -g root "$candidate" "$config"
