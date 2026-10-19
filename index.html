@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#171e1b">
+<title>De Lage Landen — Een kroniek van de Nederlandse Opstand</title>
+<link rel="icon" href="data:,">
+<link rel="preload" href="resources.bin" as="fetch" crossorigin fetchpriority="high">
+<style>
+:root{color-scheme:dark;--paper:#eee5cf;--muted:#b8b49f;--gold:#c6a96b;--ink:#171e1b;font-family:Georgia,'Times New Roman',serif}
+*{box-sizing:border-box}body{margin:0;background:var(--ink);color:var(--paper)}button{font:inherit;cursor:pointer}button:focus-visible{outline:2px solid var(--gold);outline-offset:5px}button:disabled{cursor:wait;opacity:.6}
+#terrain{position:fixed;inset:0;width:100%;height:100%;touch-action:none;background:#707c77}#menu{position:relative;min-height:100svh;display:flex;flex-direction:column;padding:36px 5vw;background:linear-gradient(90deg,rgba(17,25,22,.98),rgba(17,25,22,.90) 35%,rgba(17,25,22,.35) 75%,rgba(17,25,22,.15));isolation:isolate}#menu:before{content:'';position:absolute;inset:14px;border:1px solid #c6a96b30;pointer-events:none;z-index:-1}
+header,footer{display:flex;align-items:center;justify-content:space-between;gap:24px}.eyebrow,header,footer,.meta,button,.hud,.legend{font-family:system-ui,sans-serif}.eyebrow,header,.meta{font-size:11px;letter-spacing:.22em;text-transform:uppercase}header{color:var(--muted)}.brand{display:flex;align-items:center;gap:14px}.seal{border:1px solid var(--gold);width:34px;height:40px;display:grid;place-items:center;color:var(--gold);font:24px Georgia;border-radius:0 0 45% 45%}.edition{letter-spacing:.12em}.hero{flex:1;display:flex;flex-direction:column;justify-content:center;max-width:640px;padding:64px 0}.eyebrow{color:var(--gold);display:flex;align-items:center;gap:16px}.eyebrow:before{content:'';width:35px;height:1px;background:var(--gold)}h1{font-weight:400;font-size:clamp(68px,7.6vw,116px);line-height:.91;letter-spacing:-.065em;margin:30px 0 24px}h1 em{font-weight:400;color:var(--gold)}.subtitle{font-size:19px;font-style:italic;color:#d2c8af;margin:0 0 28px}.intro{max-width:380px;font-size:16px;color:var(--muted);line-height:1.75;margin:0 0 32px}.primary{width:300px;max-width:100%;display:flex;justify-content:space-between;align-items:center;background:var(--gold);border:1px solid var(--gold);color:#18201b;padding:19px 22px;font-size:12px;letter-spacing:.1em;text-transform:uppercase}.primary:hover{background:#dfc38a}.secondary{border:0;background:none;color:var(--paper);padding:18px 0;font-size:12px;text-align:left;letter-spacing:.04em;width:fit-content}.secondary:hover{color:var(--gold)}#status{font:11px system-ui;color:var(--muted);min-height:30px;max-width:420px;line-height:1.6;margin-top:9px}.dot{display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--gold);margin-right:8px}.meta{display:flex;gap:32px;margin-top:20px;color:var(--muted);letter-spacing:.1em}.meta strong{display:block;color:var(--paper);font:22px Georgia;margin-bottom:7px;letter-spacing:0}footer{font-size:10px;color:var(--muted);line-height:1.8;letter-spacing:.06em}.map-note{position:absolute;right:6vw;top:43%;text-align:center;color:#eee5cfaa;pointer-events:none}.compass{font-size:54px;font-weight:400;line-height:1.4}.map-note small{font:10px system-ui;letter-spacing:.25em}.map-note p{font-style:italic;font-size:19px}dialog{max-width:560px;width:calc(100% - 40px);background:#202923;color:var(--paper);border:1px solid #c6a96b70;padding:36px;line-height:1.75}dialog::backdrop{background:#0009}dialog h2{font-weight:400;font-size:32px;margin-top:0}dialog button,.hud button{border:1px solid #c6a96b70;background:#202923;color:var(--paper);padding:10px 16px}.hud{position:fixed;inset:22px 24px auto;display:flex;justify-content:space-between;gap:16px;align-items:flex-start;pointer-events:none}.hud>*{pointer-events:auto;background:#17201bea;border:1px solid #c6a96b50;padding:14px 18px}.hud strong{font:22px Georgia}.hud small{display:block;color:var(--muted);font-size:10px;margin-top:6px;letter-spacing:.06em}.legend{position:fixed;bottom:24px;left:24px;padding:14px 18px;background:#17201bea;border:1px solid #c6a96b50;font-size:11px;color:var(--muted);line-height:1.9}.legend span{display:inline-block;margin-right:15px}.legend i{display:inline-block;width:7px;height:7px;margin-right:6px;background:var(--c)}[hidden]{display:none!important}
+@media(max-width:650px){#menu{padding:28px}.hero{padding:50px 0}.edition,.map-note{display:none}h1{font-size:76px}.intro{font-size:15px}.meta{gap:22px}footer{align-items:flex-start;font-size:9px}.hud{inset:12px}.hud>*{padding:10px}.hud strong{font-size:17px}.legend{left:12px;right:12px;bottom:12px}.legend .help{display:none}}
+.tools{display:flex;flex-wrap:wrap;gap:6px;max-width:520px}.tools button[aria-pressed=true]{background:#a98e51;color:#171e1b}.touch-help{display:none}.zoom{display:flex;gap:6px;margin-top:8px}.zoom button{background:#253329;color:var(--paper);border:1px solid #c6a96b70;width:34px;height:30px;font-size:20px}
+@media(max-width:650px){#menu{background:linear-gradient(90deg,#111916ed,#111916b8)}.hud{flex-direction:column;gap:6px}.hud .tools{padding:6px}.tools button{padding:9px;font-size:11px}.touch-help{display:block}.brand{font-size:9px;letter-spacing:.14em}.map-note{display:none}}
+</style>
+</head>
+<body>
+<canvas id="terrain" aria-label="Interactieve driedimensionale landschapskaart van de Lage Landen"></canvas>
+<main id="menu">
+ <header><div class="brand"><span class="seal">L</span><span>Een kroniek van de Nederlandse Opstand</span></div><span class="edition">Landschapsstudie · Nr. 01</span></header>
+ <section class="hero"><div class="eyebrow">De Nederlanden · 1568–1648</div><h1>Lage<br><em>Landen</em></h1><p class="subtitle">Een verdeeld land. Een republiek in wording.</p><p class="intro">Tussen kroon en geweten ontkiemt een opstand. Verken het landschap van een strijd gevormd door land, water en de wil van zijn bewoners.</p>
+ <button id="enter" class="primary">Verken het landschap <span aria-hidden="true">↗</span></button><button id="about" class="secondary">De historische achtergrond &nbsp; →</button>
+ <div id="status" role="status" aria-live="polite"><span class="dot"></span>Het landschap wordt op de achtergrond voorbereid…</div>
+ <div class="meta"><div><strong>1568</strong>Het begin</div><div><strong>80 jaar</strong>Opstand</div><div><strong>XVII</strong>Provinciën</div></div></section>
+ <aside class="map-note" aria-hidden="true"><small>N</small><div class="compass">✧</div><p>Oud land,<br>ongeschreven geschiedenis.</p><small>DE LAGE LANDEN</small></aside>
+ <footer><span>Een gedetailleerd strategiespel in wording.<br>Landschapsverkenning · Historische simulatie in ontwikkeling.</span><span>Land · Water · Macht<br>Lokaal getekend met WebGPU</span></footer>
+</main>
+<div id="hud" class="hud" hidden><div><strong>De Lage Landen</strong><small>1568 · LANDSCHAPSSTUDIE <span id="detail"></span></small></div><div class="tools"><button id="light" aria-pressed="false">Licht: ochtend</button><button id="contours" aria-pressed="false">Hoogtelijnen</button><button id="reset">Beginbeeld</button><button id="back">Menu <span aria-hidden="true">↵</span></button></div></div>
+<aside id="legend" class="legend" hidden><span><i style="--c:#426540"></i>Bos</span><span><i style="--c:#b8a466"></i>Akkerland</span><span><i style="--c:#88935c"></i>Grasland</span><span><i style="--c:#9a7864"></i>Bebouwing</span><span><i style="--c:#387c91"></i>Water</span><div class="help">Slepen / WASD: verschuiven · Scrollen: zoomen · Shift-slepen: kantelen · Q/E: draaien · R: beginbeeld · Esc: menu</div><div class="touch-help">Sleep om te verplaatsen · Gebruik − / + om te zoomen</div><div class="zoom"><button id="zoom-out" aria-label="Uitzoomen">−</button><button id="zoom-in" aria-label="Inzoomen">+</button></div></aside>
+<dialog id="history"><h2>Opstand in de Nederlanden</h2><p>In 1568 groeide het verzet tegen Filips II van Spanje uit tot een openlijke strijd. Geloof, belastingen, lokale privileges en vorstelijk gezag zouden de zeventien provinciën ingrijpend veranderen.</p><p>Dit project onderzoekt de Nederlandse Opstand als een gedetailleerde strategische casestudy: een landschap van steden, akkers, waterwegen en betwiste macht.</p><p>Deze versie is een interactieve landschapsstudie op basis van de aangeleverde hoogte- en grondgebruikskaarten. Boskruinen en akkerpatronen zijn een artistieke verbeelding van die gegevens. De historische nederzettingen en campagnesimulatie volgen later.</p><button id="close">Terug naar het landschap</button></dialog>
+<script type="module">
+// Everything executable lives here. Only the compressed map pack crosses the network.
+const $ = id => document.getElementById(id), mark = name => performance.mark(name);
+const canvas = $('terrain'), menu = $('menu'), status = $('status');
+mark('menu-dom-ready');
+const assetsPromise = fetch('resources.bin').then(r => {if (!r.ok) throw Error(`Kaart downloaden mislukt (HTTP ${r.status}).`); return r.arrayBuffer();}).then(b => {mark('assets-downloaded'); return unpack(b);});
+const gpuPromise = (async () => {
+ if (!navigator.gpu) throw Error('WebGPU is niet beschikbaar. Open deze pagina via localhost of HTTPS in een browser met WebGPU-ondersteuning.');
+ const adapter = await navigator.gpu.requestAdapter();
+ if (!adapter) throw Error('Geen geschikte grafische adapter gevonden. Schakel hardwareversnelling in en herlaad de pagina.');
+ const device = await adapter.requestDevice(); mark('gpu-ready'); return device;
+})();
+async function unpack(bytes) {
+ const view = new DataView(bytes), decode = new TextDecoder();
+ if (bytes.byteLength < 12 || decode.decode(bytes.slice(0,8)) !== 'REVOLT01') throw Error('Ongeldig kaartbestand.');
+ const length = view.getUint32(8,true);
+ if (length > 4096 || length + 12 > bytes.byteLength) throw Error('Ongeldige kaartmetadata.');
+ const meta = JSON.parse(decode.decode(bytes.slice(12,12+length)));
+ if (meta.version !== 1 || ![meta.width,meta.height,meta.tile,meta.columns,meta.rows].every(n => Number.isInteger(n) && n > 0) || meta.tile !== 1024 || meta.columns !== Math.ceil(meta.width/meta.tile) || meta.rows !== Math.ceil(meta.height/meta.tile) || meta.columns*meta.rows > 256 || !(meta.widthMeters > 0 && meta.heightScale > 0 && Number.isFinite(meta.heightBase))) throw Error('Deze kaartindeling wordt niet ondersteund.');
+ const stream = new Blob([bytes.slice(12+length)]).stream().pipeThrough(new DecompressionStream('deflate'));
+ const data = await new Response(stream).arrayBuffer();
+ if (data.byteLength !== (meta.tile+2)**2*2*meta.columns*meta.rows) throw Error('Het kaartbestand is onvolledig.');
+ mark('assets-decoded'); return {meta,data};
+}
+// Rome's procedural grids, reverse-Z projection and terrain lighting, translated to WGSL.
+const shader = `
+struct Uniforms { camera:vec4f, focus:vec4f, screen:vec4f, map:vec4f, scale:vec4f };
+@group(0) @binding(0) var<uniform> u:Uniforms;
+@group(0) @binding(1) var atlas:texture_2d_array<f32>;
+@group(0) @binding(2) var linearSampler:sampler;
+@group(0) @binding(3) var<storage,read> patches:array<vec4f>;
+@group(0) @binding(4) var<storage,read> trees:array<vec4f>;
+fn texel(p:vec2f) -> vec4f {
+ let pixel=clamp(p,vec2f(0),vec2f(1))*(u.map.xy-1.0);
+ let tile=vec2i(floor(pixel/u.map.z));
+ let uv=(pixel-vec2f(tile)*u.map.z+1.5)/(u.map.z+2.0);
+ return textureSampleLevel(atlas,linearSampler,uv,tile.y*i32(u.map.w)+tile.x,0.0);
+}
+fn height(p:vec2f) -> f32 { return (texel(p).r-u.scale.x)*u.scale.y*u.scale.z; }
+fn material(p:vec2f) -> u32 {
+ let pixel=vec2i(round(clamp(p,vec2f(0),vec2f(1))*(u.map.xy-1.0)));
+ let tile=pixel/i32(u.map.z);
+ return u32(round(textureLoad(atlas,pixel-tile*i32(u.map.z)+1,tile.y*i32(u.map.w)+tile.x,0).g*255.0));
+}
+struct Vertex { @builtin(position) position:vec4f, @location(0) uv:vec2f, @location(1) world:vec3f };
+@vertex fn vs(@builtin(vertex_index) id:u32,@builtin(instance_index) instance:u32) -> Vertex {
+ let tilePatch=patches[instance];
+ // 35×35 includes a one-vertex skirt around each 32×32-cell patch.
+ let grid=vec2f(f32(id%35u),f32(id/35u))-1.0;
+ let uv=tilePatch.xy+clamp(grid,vec2f(0),vec2f(32))/32.0*tilePatch.z;
+ var h=height(uv);
+ if (any(grid<vec2f(0)) || any(grid>vec2f(32))) { h-=max(0.0003,tilePatch.z*0.012); }
+ let world=vec3f(uv.x-0.5,h,(uv.y-0.5)*u.scale.w);
+ let forward=normalize(u.focus.xyz-u.camera.xyz);
+ let right=normalize(cross(forward,vec3f(0,1,0))); let up=cross(right,forward);
+ let d=world-u.camera.xyz; let z=dot(d,forward);
+ var out:Vertex; out.position=vec4f(dot(d,right)*1.732/u.screen.x,dot(d,up)*1.732,0.0001,z);
+ out.uv=uv; out.world=world; return out;
+}
+fn hash(p:vec2f) -> f32 { return fract(sin(dot(p,vec2f(127.1,311.7)))*43758.5453); }
+fn noise(p:vec2f) -> f32 { let i=floor(p); let f=fract(p); let t=f*f*(3.0-2.0*f); return mix(mix(hash(i),hash(i+vec2f(1,0)),t.x),mix(hash(i+vec2f(0,1)),hash(i+1.0),t.x),t.y); }
+fn sunlight() -> vec3f { return normalize(mix(vec3f(-0.65,0.55,-0.5),vec3f(0.7,0.30,-0.45),u.screen.w)); }
+fn sunColor() -> vec3f { return mix(vec3f(1.12,0.96,0.69),vec3f(1.25,0.70,0.40),u.screen.w); }
+fn haze() -> vec3f { return mix(vec3f(0.67,0.73,0.67),vec3f(0.65,0.54,0.48),u.screen.w); }
+fn atmosphere(color:vec3f,world:vec3f) -> vec3f {
+ let fog=(1.0-exp(-length(world-u.camera.xyz)*0.42))*0.62;
+ return mix(color,haze(),fog);
+}
+struct SkyVertex { @builtin(position) position:vec4f, @location(0) uv:vec2f };
+@vertex fn skyVS(@builtin(vertex_index) id:u32) -> SkyVertex {
+ let p=array<vec2f,3>(vec2f(-1,-1),vec2f(3,-1),vec2f(-1,3))[id];
+ var v:SkyVertex; v.position=vec4f(p,0,1);v.uv=p*0.5+0.5;return v;
+}
+@fragment fn skyFS(v:SkyVertex) -> @location(0) vec4f {
+ let grain=noise(v.uv*vec2f(380,260))*0.012;
+ let glow=exp(-length((v.uv-vec2f(0.74,0.7))*vec2f(u.screen.x,1))*2.8);
+ let color=mix(vec3f(0.20,0.28,0.27),haze()*0.83,v.uv.y*0.45+glow*0.4);
+ return vec4f(color+grain,1);
+}
+@fragment fn fs(v:Vertex) -> @location(0) vec4f {
+ let px=1.0/(u.map.xy-1.0);
+ // A wider normal stencil softens quantization in the supplied 8-bit heights.
+ let step=px*4.0;
+ let dx=height(v.uv+vec2f(step.x,0))-height(v.uv-vec2f(step.x,0));
+ let dz=height(v.uv+vec2f(0,step.y))-height(v.uv-vec2f(0,step.y));
+ let normal=normalize(vec3f(-dx/(2.0*step.x),1,-dz/(2.0*step.y*u.scale.w)));
+ let kind=material(v.uv);
+ var color=vec3f(0.46,0.55,0.29);
+ switch kind {
+ case 1u: {color=vec3f(0.16,0.29,0.16);}
+ case 2u: {color=vec3f(0.68,0.57,0.30);}
+ case 4u: {color=vec3f(0.53,0.38,0.27);}
+ case 5u: {color=vec3f(0.12,0.33,0.43);}
+ case 6u: {color=vec3f(0.66,0.64,0.56);}
+ case 7u: {color=vec3f(0.30,0.48,0.40);}
+ case 8u: {color=vec3f(0.48,0.49,0.30);}
+ case 9u: {color=vec3f(0.88,0.89,0.86);}
+ default: {}
+ }
+ // Rome blends adjacent logarithmic detail scales as camera distance changes.
+ let distanceToEye=length(v.world-u.camera.xyz);
+ let lod=log(max(distanceToEye,0.001)*12.0); let level=floor(lod); let blend=fract(lod);
+ let detail=mix(noise(v.uv*800.0/exp(level)),noise(v.uv*800.0/exp(level+1.0)),blend);
+ color*=0.84+detail*0.27;
+ // Miniature landscape: seeded field parcels and plough lines, only on cropland.
+ let parcel=v.uv*170.0; let cell=floor(parcel); let seed=hash(cell);
+ let f=fract(parcel); let boundary=min(min(f.x,1.0-f.x),min(f.y,1.0-f.y));
+ let footprint=max(length(dpdx(parcel)),length(dpdy(parcel)));
+ let close=1.0-smoothstep(0.15,0.8,footprint);
+ if(kind==2u){
+   let rows=mix(f.x,f.y,step(0.5,seed))*22.0;
+   let furrow=sin(rows*6.283)*0.045*close;
+   color*=0.83+seed*0.34+furrow;
+   color=mix(color,vec3f(0.25,0.31,0.15),(1.0-smoothstep(0.008,0.035,boundary))*close*0.45);
+ }
+ if(kind==4u){
+   let roofs=step(0.45,noise(v.uv*2500.0));
+   color=mix(color,vec3f(0.68,0.43,0.28),roofs*0.3*close);
+ }
+ let slope=1.0-clamp(normal.y,0.0,1.0);
+ color=mix(color,vec3f(0.61,0.57,0.46),smoothstep(0.04,0.25,slope)*0.5);
+ let light=sunlight(); let sun=max(dot(normal,light),0.0);
+ // Short heightfield shadow rays and broad drifting cloud shadows add depth.
+ var shadow=1.0;
+ for(var i=1;i<=4;i++){
+   let reach=f32(i)*0.003;
+   let obstruction=height(v.uv+light.xz*reach/vec2f(1,u.scale.w))-height(v.uv)-light.y*reach;
+   shadow*=1.0-smoothstep(0.0,0.0015,obstruction)*0.16;
+ }
+ let cloud=noise(v.uv*7.0+vec2f(u.screen.y*0.0015,0));
+ shadow*=mix(0.79,1.0,smoothstep(0.3,0.7,cloud));
+ color*= (vec3f(0.33,0.43,0.46)+sun*sunColor()*1.1*shadow)*(1.0-slope*0.25);
+ // Optional fine ink contours, derivative-antialiased and faded at grazing angles.
+ let contour=height(v.uv)/(u.scale.y*u.scale.z)*255.0/2.0;
+ let line=abs(fract(contour+0.5)-0.5);
+ let aa=max(fwidth(contour),0.025);
+ color=mix(color,color*0.55,(1.0-smoothstep(aa*0.35,aa*1.3,line))*u.screen.z*0.45);
+ if (kind==5u) {
+   let shore=f32(material(v.uv+vec2f(px.x,0))!=5u || material(v.uv-vec2f(px.x,0))!=5u || material(v.uv+vec2f(0,px.y))!=5u || material(v.uv-vec2f(0,px.y))!=5u);
+   let wave=sin(v.uv.x*3200.0+v.uv.y*2100.0+u.screen.y*1.4);
+   let waterNormal=normalize(vec3f(wave*0.13,1,cos(v.uv.y*3800.0-u.screen.y)*0.09));
+   let eye=normalize(u.camera.xyz-v.world);
+   let glint=pow(max(dot(reflect(-light,waterNormal),eye),0.0),48.0);
+   let fresnel=pow(1.0-max(dot(eye,waterNormal),0.0),3.0);
+   color=mix(vec3f(0.045,0.19,0.22),vec3f(0.24,0.43,0.39),shore*0.6+fresnel*0.3);
+   color+=sunColor()*glint*0.65+wave*0.008;
+   color=mix(color,vec3f(0.62,0.66,0.49),shore*0.22);
+ }
+ return vec4f(atmosphere(color,v.world),1);
+}
+// Instanced canopy clusters: shaded ellipsoid impostors, not flat green pixels.
+struct Crown { @builtin(position) position:vec4f, @location(0) local:vec2f, @location(1) world:vec3f, @location(2) @interpolate(flat) seed:f32 };
+@vertex fn treeVS(@builtin(vertex_index) id:u32,@builtin(instance_index) instance:u32) -> Crown {
+ let t=trees[instance]; let seed=hash(t.xy*1000.0);
+ let corners=array<vec2f,6>(vec2f(-1,-1),vec2f(1,-1),vec2f(-1,1),vec2f(-1,1),vec2f(1,-1),vec2f(1,1));
+ let corner=corners[id]; let forward=normalize(u.focus.xyz-u.camera.xyz);
+ let right=normalize(cross(forward,vec3f(0,1,0)));let up=cross(right,forward);
+ let center=vec3f(t.x-0.5,t.z+t.w*0.85,(t.y-0.5)*u.scale.w);
+ let world=center+right*corner.x*t.w+up*corner.y*t.w*1.15;
+ let d=world-u.camera.xyz;
+ var v:Crown;v.position=vec4f(dot(d,right)*1.732/u.screen.x,dot(d,up)*1.732,0.0001,dot(d,forward));
+ v.local=corner;v.world=world;v.seed=seed;return v;
+}
+@fragment fn treeFS(v:Crown) -> @location(0) vec4f {
+ let p=v.local;let radius=dot(p,p);
+ let lobes=0.055*sin(atan2(p.y,p.x)*7.0+v.seed*10.0);
+ if(radius>0.92+lobes){discard;}
+ let n=normalize(vec3f(p.x,sqrt(max(0.01,1.0-radius)),p.y*0.65));
+ let sun=max(dot(n,sunlight()),0.0);
+ let foliage=mix(vec3f(0.11,0.23,0.12),vec3f(0.32,0.39,0.15),v.seed);
+ let flecks=noise(p*12.0+v.seed*30.0)*0.16;
+ let color=foliage*(vec3f(0.34,0.45,0.40)+sunColor()*(sun*0.9+flecks))*(0.75+0.25*n.y);
+ return vec4f(atmosphere(color,v.world),1);
+}`;
+const relief = 6; // Display exaggeration; pack elevations remain unmodified.
+const defaults = {x:0.5,y:0.52,distance:1.05,yaw:0,pitch:0.88};
+let camera = {...defaults}, playing = false, render, failed = false;
+const keys=new Set();
+try { const saved=JSON.parse(localStorage.getItem('low-countries-view')); if (saved && Object.keys(defaults).every(k=>Number.isFinite(saved[k])) && saved.distance>=0.018 && saved.distance<=2.5 && saved.pitch>=0.3 && saved.pitch<=1.5 && saved.x>=0 && saved.x<=1 && saved.y>=0 && saved.y<=1) {camera=saved; $('enter').firstChild.textContent='Continue exploring ';} } catch {}
+const ready = (async () => {
+ const device = await gpuPromise;
+ device.lost.then(info => fail(Error(`Graphics device lost: ${info.message || info.reason}. Reload to reconnect.`)));
+ device.addEventListener('uncapturederror', event => fail(Error(event.error.message)));
+ const context=canvas.getContext('webgpu'), format=navigator.gpu.getPreferredCanvasFormat();
+ if (!context) throw Error('Unable to create a WebGPU canvas');
+ context.configure({device,format,alphaMode:'opaque'});
+ const module=device.createShaderModule({code:shader});
+ module.getCompilationInfo().then(info=>{for(const message of info.messages) if(message.type==='error') console.error(`WGSL ${message.lineNum}: ${message.message}`);});
+ // Compilation starts before waiting for the map; upload overlaps compilation.
+ const pipelinePromise=device.createRenderPipelineAsync({layout:'auto',vertex:{module,entryPoint:'vs'},fragment:{module,entryPoint:'fs',targets:[{format}]},primitive:{topology:'triangle-list'},depthStencil:{format:'depth32float',depthWriteEnabled:true,depthCompare:'greater'}}).then(p=>{mark('pipeline-ready');return p;});
+ const scenePromise=assetsPromise.then(pack=>{
+  const {meta:m,data}=pack;
+  const size=m.tile+2, layers=m.columns*m.rows;
+  if (size>device.limits.maxTextureDimension2D || layers>device.limits.maxTextureArrayLayers) throw Error('This map exceeds the GPU texture limits');
+  const texture=device.createTexture({size:[size,size,layers],format:'rg8unorm',usage:GPUTextureUsage.TEXTURE_BINDING|GPUTextureUsage.COPY_DST});
+  device.queue.writeTexture({texture},data,{bytesPerRow:size*2,rowsPerImage:size},[size,size,layers]);
+  // Keep only a tiny CPU height overview for terrain-following camera focus.
+  const bytes=new Uint8Array(data), overview=new Float32Array(256*256);
+  for(let y=0;y<256;y++) for(let x=0;x<256;x++){
+   const px=Math.round(x/255*(m.width-1)), py=Math.round(y/255*(m.height-1));
+   const layer=Math.floor(py/m.tile)*m.columns+Math.floor(px/m.tile);
+   overview[y*256+x]=(bytes[(layer*size*size+(py%m.tile+1)*size+px%m.tile+1)*2]/255-m.heightBase)*m.heightScale/m.widthMeters*relief;
+  }
+  pack.data=null; // Release the full CPU raster after queue.writeTexture copies it.
+  mark('assets-upload-queued'); return {m,texture,overview};
+ });
+ const [pipeline,{m,texture,overview}]=await Promise.all([pipelinePromise,scenePromise]);
+ const uniform=device.createBuffer({size:80,usage:GPUBufferUsage.UNIFORM|GPUBufferUsage.COPY_DST});
+ const patches=device.createBuffer({size:4096*16,usage:GPUBufferUsage.STORAGE|GPUBufferUsage.COPY_DST});
+ const bind=device.createBindGroup({layout:pipeline.getBindGroupLayout(0),entries:[{binding:0,resource:{buffer:uniform}},{binding:1,resource:texture.createView({dimension:'2d-array'})},{binding:2,resource:device.createSampler({magFilter:'linear',minFilter:'linear'})},{binding:3,resource:{buffer:patches}}]});
+ const indices=[];
+ for(let y=0;y<34;y++) for(let x=0;x<34;x++){const a=y*35+x;indices.push(a,a+35,a+1,a+1,a+35,a+36);}
+ const index=device.createBuffer({size:indices.length*2,usage:GPUBufferUsage.INDEX|GPUBufferUsage.COPY_DST});
+ device.queue.writeBuffer(index,0,new Uint16Array(indices));
+ let depth, width=0, height=0;
+ const ratio=m.height/m.width, values=new Float32Array(20);
+ render=()=>{
+  if(failed) return;
+  const dpr=Math.min(devicePixelRatio,2), limit=device.limits.maxTextureDimension2D;
+  const w=Math.min(limit,Math.max(1,Math.round(innerWidth*dpr))),h=Math.min(limit,Math.max(1,Math.round(innerHeight*dpr)));
+  if(width!==w || height!==h){width=canvas.width=w;height=canvas.height=h;depth?.destroy();depth=device.createTexture({size:[w,h],format:'depth32float',usage:GPUTextureUsage.RENDER_ATTACHMENT});}
+  // Adaptive quadtree: fixed 32-cell patches; skirts conceal mixed-LOD edges.
+  const list=[], maxLevel=Math.max(0,Math.ceil(Math.log2(Math.max(m.width,m.height)/32)));
+  function visit(x,y,s,level){
+   const distance=Math.hypot((x+s/2-camera.x),(y+s/2-camera.y)*ratio,camera.distance*0.55);
+   if(level<maxLevel && s/distance>0.32 && list.length<4000*4){const n=s/2;visit(x,y,n,level+1);visit(x+n,y,n,level+1);visit(x,y+n,n,level+1);visit(x+n,y+n,n,level+1);}else list.push(x,y,s,0);
+  }
+  visit(0,0,1,0);
+  const targetHeight=overview[Math.round(camera.y*255)*256+Math.round(camera.x*255)];
+  const target=[camera.x-0.5,targetHeight,(camera.y-0.5)*ratio], horizontal=Math.cos(camera.pitch)*camera.distance;
+  values.set([target[0]+Math.sin(camera.yaw)*horizontal,target[1]+Math.sin(camera.pitch)*camera.distance,target[2]+Math.cos(camera.yaw)*horizontal,0,...target,0,w/h,0,0,0,m.width,m.height,m.tile,m.columns,m.heightBase,m.heightScale/m.widthMeters,relief,ratio]);
+  device.queue.writeBuffer(uniform,0,values); device.queue.writeBuffer(patches,0,new Float32Array(list));
+  const encoder=device.createCommandEncoder();
+  const pass=encoder.beginRenderPass({colorAttachments:[{view:context.getCurrentTexture().createView(),clearValue:{r:.30,g:.37,b:.38,a:1},loadOp:'clear',storeOp:'store'}],depthStencilAttachment:{view:depth.createView(),depthClearValue:0,depthLoadOp:'clear',depthStoreOp:'store'}});
+  pass.setPipeline(pipeline);pass.setBindGroup(0,bind);pass.setIndexBuffer(index,'uint16');pass.drawIndexed(indices.length,list.length/4);pass.end();device.queue.submit([encoder.finish()]);
+  $('detail').textContent=`· ${m.width.toLocaleString()} × ${m.height.toLocaleString()}`;
+ };
+ render(); await device.queue.onSubmittedWorkDone();mark('first-frame-complete');
+ await new Promise(requestAnimationFrame); mark('renderer-ready');
+ if(!failed) status.textContent='Landscape ready. Enter when you are ready.';
+ return render;
+})();
+// Attach rejection handlers immediately, even if the other startup branch fails first.
+assetsPromise.catch(fail); gpuPromise.catch(fail); ready.catch(fail);
+function fail(error){failed=true;status.textContent=error.message || String(error);$('enter').disabled=true;$('enter').firstChild.textContent='Renderer unavailable ';showMenu();console.error(error);}
+function save(){try{localStorage.setItem('low-countries-view',JSON.stringify(camera));}catch{}}
+function showMenu(){playing=false;menu.hidden=false;$('hud').hidden=$('legend').hidden=true;keys.clear();}
+$('enter').onclick=async()=>{ $('enter').disabled=true;status.textContent='Opening the landscape…';mark('enter-clicked');try{await ready;if(failed)return;render();await new Promise(requestAnimationFrame);menu.hidden=true;$('hud').hidden=$('legend').hidden=false;playing=true;mark('playing');canvas.tabIndex=0;canvas.focus();}catch(error){fail(error);}finally{if(!failed)$('enter').disabled=false;} };
+$('about').onclick=()=>$('history').showModal();$('close').onclick=()=>$('history').close();
+$('back').onclick=()=>{save();showMenu();$('enter').focus();};
+function reset(){camera={...defaults};render?.();save();} $('reset').onclick=reset;
+addEventListener('resize',()=>render?.());
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));let drag;
+function pan(dx,dy){const c=Math.cos(camera.yaw),s=Math.sin(camera.yaw);camera.x=clamp(camera.x+dx*c+dy*s,0,1);camera.y=clamp(camera.y-dx*s+dy*c,0,1);}
+canvas.onpointerdown=e=>{if(!playing)return;drag={x:e.clientX,y:e.clientY};canvas.setPointerCapture(e.pointerId);};
+canvas.onpointermove=e=>{if(!drag||!playing)return;const dx=e.clientX-drag.x,dy=e.clientY-drag.y;drag={x:e.clientX,y:e.clientY};if(e.shiftKey||e.buttons===2){camera.yaw-=dx*.006;camera.pitch=clamp(camera.pitch+dy*.004,.3,1.5);}else pan(-dx/innerHeight*camera.distance, -dy/innerHeight*camera.distance/Math.sin(camera.pitch));render?.();};
+canvas.onpointerup=canvas.onpointercancel=canvas.onlostpointercapture=()=>{drag=null;save();};canvas.oncontextmenu=e=>e.preventDefault();
+canvas.addEventListener('wheel',e=>{if(!playing)return;e.preventDefault();camera.distance=clamp(camera.distance*Math.exp(clamp(e.deltaY,-100,100)*.0015),.018,2.5);render?.();save();},{passive:false});
+addEventListener('keydown',e=>{if(!playing)return;const key=e.key.toLowerCase();if(['w','a','s','d','q','e','arrowup','arrowdown','arrowleft','arrowright','r','escape'].includes(key)){e.preventDefault();if(key==='escape'){$('back').click();return;}if(key==='r'){reset();return;}keys.add(key);}});
+addEventListener('keyup',e=>{keys.delete(e.key.toLowerCase());save();});addEventListener('blur',()=>{keys.clear();drag=null;save();});
+let last=0;function tick(now){const dt=Math.min((now-last)/1000,.05);last=now;if(playing&&keys.size&&!document.hidden){const step=dt*camera.distance*.5;pan((Number(keys.has('d')||keys.has('arrowright'))-Number(keys.has('a')||keys.has('arrowleft')))*step,(Number(keys.has('s')||keys.has('arrowdown'))-Number(keys.has('w')||keys.has('arrowup')))*step);camera.yaw+=(Number(keys.has('e'))-Number(keys.has('q')))*dt;render?.();}requestAnimationFrame(tick);}requestAnimationFrame(tick);
+</script>
+</body>
+</html>
